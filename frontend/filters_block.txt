@@ -1,0 +1,263 @@
+﻿
+class _FilterSheet extends StatelessWidget {
+  const _FilterSheet({
+    required this.price,
+    required this.minRating,
+    required this.sort,
+    required this.guests,
+    required this.category,
+    required this.onCategoryChanged,
+    required this.onPriceChanged,
+    required this.onRatingChanged,
+    required this.onSortChanged,
+    required this.onApply,
+    required this.onReset,
+  });
+
+  final RangeValues price;
+  final double minRating;
+  final String sort;
+  final int? guests;
+  final String? category;
+  final ValueChanged<String?> onCategoryChanged;
+  final ValueChanged<RangeValues> onPriceChanged;
+  final ValueChanged<double> onRatingChanged;
+  final ValueChanged<String> onSortChanged;
+  final VoidCallback onApply;
+  final VoidCallback onReset;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.fromLTRB(20, 12, 20, 24),
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(28)),
+      ),
+      child: SafeArea(
+        top: false,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Center(
+                child: Container(
+                  width: 44,
+                  height: 4,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFDCE5E2),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const Text('Filters', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w900, color: GuzoColors.ink)),
+              const SizedBox(height: 16),
+              _filterBody(
+                context: context,
+                price: price,
+                minRating: minRating,
+                sort: sort,
+                guests: guests,
+                category: category,
+                cityController: null,
+                onCategoryChanged: onCategoryChanged,
+                onPriceChanged: onPriceChanged,
+                onRatingChanged: onRatingChanged,
+                onSortChanged: onSortChanged,
+                onGuestsChanged: (g) {},
+                onCityChanged: (_) {},
+              ),
+              const SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: OutlinedButton(
+                      onPressed: onReset,
+                      child: const Text('Reset'),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: ElevatedButton(
+                      onPressed: onApply,
+                      child: const Text('Apply'),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _DesktopFilterPanel extends StatelessWidget {
+  const _DesktopFilterPanel({
+    required this.price,
+    required this.minRating,
+    required this.sort,
+    required this.guests,
+    required this.category,
+    required this.city,
+    required this.onCategoryChanged,
+    required this.onPriceChanged,
+    required this.onRatingChanged,
+    required this.onSortChanged,
+    required this.onApply,
+    required this.onReset,
+  });
+
+  final RangeValues price;
+  final double minRating;
+  final String sort;
+  final int? guests;
+  final String? category;
+  final TextEditingController city;
+  final ValueChanged<String?> onCategoryChanged;
+  final ValueChanged<RangeValues> onPriceChanged;
+  final ValueChanged<double> onRatingChanged;
+  final ValueChanged<String> onSortChanged;
+  final VoidCallback onApply;
+  final VoidCallback onReset;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(24),
+        border: Border.all(color: const Color(0xFFE8EEEC)),
+        boxShadow: [
+          BoxShadow(color: GuzoColors.ink.withValues(alpha: 0.05), blurRadius: 18, offset: const Offset(0, 8)),
+        ],
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text('Filters', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, color: GuzoColors.ink)),
+            const SizedBox(height: 14),
+            _filterBody(
+              context: context,
+              price: price,
+              minRating: minRating,
+              sort: sort,
+              guests: guests,
+              category: category,
+              cityController: city,
+              onCategoryChanged: onCategoryChanged,
+              onPriceChanged: onPriceChanged,
+              onRatingChanged: onRatingChanged,
+              onSortChanged: onSortChanged,
+              onGuestsChanged: (g) => onCategoryChanged(category),
+              onCityChanged: (_) {},
+            ),
+            const SizedBox(height: 16),
+            Row(
+              children: [
+                Expanded(child: OutlinedButton(onPressed: onReset, child: const Text('Reset'))),
+                const SizedBox(width: 10),
+                Expanded(child: ElevatedButton(onPressed: onApply, child: const Text('Apply'))),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+Widget _filterBody({
+  required BuildContext context,
+  required RangeValues price,
+  required double minRating,
+  required String sort,
+  required int? guests,
+  required String? category,
+  required TextEditingController? cityController,
+  required ValueChanged<String?> onCategoryChanged,
+  required ValueChanged<RangeValues> onPriceChanged,
+  required ValueChanged<double> onRatingChanged,
+  required ValueChanged<String> onSortChanged,
+  required ValueChanged<int?> onGuestsChanged,
+  required ValueChanged<String> onCityChanged,
+}) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      if (cityController != null) ...[
+        TextField(
+          controller: cityController,
+          decoration: const InputDecoration(labelText: 'City', prefixIcon: Icon(Icons.location_city_rounded)),
+          onChanged: onCityChanged,
+        ),
+        const SizedBox(height: 12),
+      ],
+      const Text('Category', style: TextStyle(fontWeight: FontWeight.w700, color: GuzoColors.ink)),
+      const SizedBox(height: 8),
+      Wrap(
+        spacing: 8,
+        runSpacing: 8,
+        children: [
+          FilterChip(
+            label: const Text('All'),
+            selected: category == null,
+            onSelected: (_) => onCategoryChanged(null),
+          ),
+          for (final c in const ['luxury', 'budget', 'resort', 'guesthouse'])
+            FilterChip(
+              label: Text(_titleCase(c)),
+              avatar: Icon(_categoryIcon(c), size: 16),
+              selected: category == c,
+              onSelected: (_) => onCategoryChanged(category == c ? null : c),
+            ),
+        ],
+      ),
+      const SizedBox(height: 14),
+      Text('Price: ETB ${price.start.round()} - ${price.end.round()}', style: const TextStyle(fontWeight: FontWeight.w700, color: GuzoColors.ink)),
+      RangeSlider(
+        min: 0,
+        max: 20000,
+        divisions: 40,
+        values: price,
+        onChanged: onPriceChanged,
+      ),
+      const SizedBox(height: 8),
+      Text('Min rating: ${minRating.toStringAsFixed(1)}', style: const TextStyle(fontWeight: FontWeight.w700, color: GuzoColors.ink)),
+      Slider(
+        min: 0,
+        max: 5,
+        divisions: 10,
+        value: minRating,
+        onChanged: onRatingChanged,
+      ),
+      const SizedBox(height: 8),
+      DropdownButtonFormField<String>(
+        initialValue: sort,
+        decoration: const InputDecoration(labelText: 'Sort by'),
+        items: const [
+          DropdownMenuItem(value: 'popularity', child: Text('Popularity')),
+          DropdownMenuItem(value: 'price_low', child: Text('Price: low to high')),
+          DropdownMenuItem(value: 'price_high', child: Text('Price: high to low')),
+          DropdownMenuItem(value: 'rating', child: Text('Rating')),
+        ],
+        onChanged: (v) => onSortChanged(v ?? 'popularity'),
+      ),
+      const SizedBox(height: 12),
+      DropdownButtonFormField<int?>(
+        initialValue: guests,
+        decoration: const InputDecoration(labelText: 'Guests'),
+        items: [
+          const DropdownMenuItem<int?>(value: null, child: Text('Any')),
+          for (int i = 1; i <= 8; i++) DropdownMenuItem<int?>(value: i, child: Text('$i')),
+        ],
+        onChanged: onGuestsChanged,
+      ),
+    ],
+  );
+}

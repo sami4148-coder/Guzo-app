@@ -1,0 +1,96 @@
+﻿  Widget _mobileSearch() {
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: const Color(0xFFE8EEEC)),
+      ),
+      child: TextField(
+        controller: _city,
+        textInputAction: TextInputAction.search,
+        onSubmitted: (_) => _load(),
+        decoration: const InputDecoration(
+          hintText: 'Search city or hotel',
+          prefixIcon: Icon(Icons.search_rounded),
+          border: InputBorder.none,
+        ),
+      ),
+    );
+  }
+
+  Widget _categoryStrip() {
+    const categories = ['luxury', 'budget', 'resort', 'guesthouse'];
+    return SizedBox(
+      height: 42,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length + 1,
+        separatorBuilder: (_, __) => const SizedBox(width: 8),
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            final selected = _category == null;
+            return ChoiceChip(
+              label: const Text('All'),
+              selected: selected,
+              onSelected: (_) {
+                setState(() => _category = null);
+                _load();
+              },
+            );
+          }
+          final cat = categories[index - 1];
+          final selected = _category == cat;
+          return ChoiceChip(
+            label: Text(_titleCase(cat)),
+            avatar: Icon(_categoryIcon(cat), size: 16),
+            selected: selected,
+            onSelected: (_) {
+              setState(() => _category = selected ? null : cat);
+              _load();
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _resultsHeading() {
+    return Row(
+      children: [
+        Text(
+          '${_hotels.length} stay${_hotels.length == 1 ? '' : 's'} found',
+          style: const TextStyle(
+            color: GuzoColors.ink,
+            fontSize: 18,
+            fontWeight: FontWeight.w900,
+            letterSpacing: -0.4,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _statusMessage({
+    required IconData icon,
+    required String title,
+    required String message,
+    Widget? action,
+  }) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(32),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 48, color: GuzoColors.muted),
+            const SizedBox(height: 12),
+            Text(title, style: const TextStyle(fontWeight: FontWeight.w800, fontSize: 16, color: GuzoColors.ink)),
+            const SizedBox(height: 6),
+            Text(message, textAlign: TextAlign.center, style: const TextStyle(color: GuzoColors.muted)),
+            if (action != null) ...[const SizedBox(height: 12), action],
+          ],
+        ),
+      ),
+    );
+  }
