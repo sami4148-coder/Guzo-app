@@ -15,7 +15,7 @@ The application connects travelers with hotel owners, allowing users to explore 
 
 ## Key Features
 
-### For Travelers
+### For Travelers or(user)
 - User registration and login.
 - Explore hotels and view hotel details.
 - View hotel photos, room prices, and facilities.
@@ -34,15 +34,15 @@ The application connects travelers with hotel owners, allowing users to explore 
 - Manage hotel listings and users.
 - Monitor hotel booking activities.
 
-## Technologies Used
+## programing languch Used
 
 - Flutter
 - Dart
-- [Add your database and backend technologies here]
+- local db and postgres
 
 ## Project Presentation
 
-**Video Presentation:** [Add your Google Drive video link here]
+**Video Presentation:** [https://drive.google.com/file/d/1xDDVBKcv0D9V6OpyAQMl4T9kSDeX56-c/view?usp=sharing]
 
 ## Team Members
 
@@ -57,7 +57,7 @@ To run the project locally:
 
 1. Clone this repository:
    ```bash
-   git clone [Add your GitHub repository URL here]
+   git clone [https://github.com/sami4148-coder/Guzo-app.git]
    ```
 2. Open the project in Visual Studio Code.
 3. Install the required Flutter dependencies:
