@@ -43,6 +43,7 @@ The application connects travelers with hotel owners, allowing users to explore 
 ## Project Presentation
 
 **Video Presentation:** [https://drive.google.com/file/d/1xDDVBKcv0D9V6OpyAQMl4T9kSDeX56-c/view?usp=sharing]
+**GUZO APP PDF:** [https://drive.google.com/file/d/1i30XSg1xhIyteZSb9lPmAQZklQ4brZ_n/view?usp=sharing]
 
 ## Team Members
 
